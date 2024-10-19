@@ -7,7 +7,7 @@ import Team from './pages/Team';
 import Events from './pages/Events';
 import Apply from './pages/Apply';
 import ApplyDomains from './pages/ApplyDomains';
-import DomainSelection from './pages/DomainSelection';
+import DomainSelection from './pages/domain-selection';
 import ApplyNow from './components/ApplyNow';
 
 function App() {
