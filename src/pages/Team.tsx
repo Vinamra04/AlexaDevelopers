@@ -16,9 +16,9 @@ const teamMembers = [
 
 const imageUrls = [
   '/images/club.png',
-  '/images/team members.png',
-  '/images/team members2.jpg',
-  '/images/team members3.jpg',
+  '/images/team_members.png',
+  '/images/team_members2.jpg',
+  '/images/team_members3.jpg',
   
    // Add a third image
 ];
