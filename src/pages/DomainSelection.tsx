@@ -25,6 +25,7 @@ const domains = [
 ];
 
 const DomainSelection = () => {
+  console.log(domains);
   const [currentDomain, setCurrentDomain] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
