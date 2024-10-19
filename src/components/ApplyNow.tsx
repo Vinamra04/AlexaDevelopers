@@ -26,7 +26,7 @@ const ApplyNow = () => {
     if (formData.name && formData.email) {
       setIsOpen(false); // Close the modal
       // Open the domains page in a new tab
-      const domainsUrl = `/domain-selection`;
+      const domainsUrl = `/domain-selection/`;
       window.open(domainsUrl, '_blank');
     } else {
       alert('Please fill in all fields');
