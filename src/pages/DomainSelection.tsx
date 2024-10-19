@@ -25,7 +25,7 @@ const domains = [
 ];
 
 const DomainSelection = () => {
-  console.log(domains);
+  // console.log(domains);
   const [currentDomain, setCurrentDomain] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -39,14 +39,22 @@ const DomainSelection = () => {
   }, []);
 
   const handleDomainChange = (index: number) => {
-    if (isTransitioning) return;
+    if (isTransitioning) {
+      return;
+    }
     setIsTransitioning(true);
     const newDirection = index > currentDomain ? 1 : -1;
     setDirection(newDirection);
     setCurrentDomain(prevDomain => {
-      if (index === prevDomain) return prevDomain;
-      if (index === 0 && prevDomain === domains.length - 1) return -1;
-      if (index === domains.length - 1 && prevDomain === 0) return domains.length;
+      if (index === prevDomain) {
+        return prevDomain;
+      }
+      if (index === 0 && prevDomain === domains.length - 1) {
+        return -1;
+      }
+      if (index === domains.length - 1 && prevDomain === 0) {
+        return domains.length;
+      }
       return index;
     });
     setTimeout(() => {
@@ -56,7 +64,9 @@ const DomainSelection = () => {
   };
 
   const getTransformStyle = (index: number) => {
-    if (index === currentDomain) return 'translate-x-0';
+    if (index === currentDomain) {
+      return 'translate-x-0';
+    }
     if (direction > 0) {
       return index < currentDomain ? '-translate-x-full' : 'translate-x-full';
     } else {
@@ -65,18 +75,17 @@ const DomainSelection = () => {
   };
 
   return (
-    <div className="min-h-screen relative isolate flex flex-col gap-8 overflow-hidden bg-black" style={{"--slides": domains.length} as React.CSSProperties}>
+    <div className="min-h-screen relative isolate flex flex-col gap-8 overflow-hidden bg-black" style={{ "--slides": domains.length } as React.CSSProperties}>
       {domains.map((domain, index) => (
-        <div 
-          key={index} 
-          className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-            getTransformStyle(index)
-          }`}
+        <div
+          key={index}
+          className={`absolute inset-0 transition-transform duration-500 ease-in-out ${getTransformStyle(index)
+            }`}
         >
-          <img 
-            className="absolute inset-0 h-full w-full object-cover" 
-            src={domain.image} 
-            alt={domain.name} 
+          <img
+            className="absolute inset-0 h-full w-full object-cover"
+            src={domain.image}
+            alt={domain.name}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
@@ -87,8 +96,8 @@ const DomainSelection = () => {
             <h1 className="text-4xl font-bold w-1/2">Explore Our Domains</h1>
             <nav className="flex font-medium text-lg gap-6 w-1/2 justify-end">
               {domains.map((domain, index) => (
-                <button 
-                  key={index} 
+                <button
+                  key={index}
                   onClick={() => handleDomainChange(index)}
                   className={`${index === currentDomain ? 'text-white' : 'text-gray-400'} hover:text-white transition-colors duration-300`}
                 >
@@ -98,7 +107,7 @@ const DomainSelection = () => {
             </nav>
           </div>
           <div className="bg-white/60 mt-2">
-            <div className="bg-white h-0.5 w-full origin-left transition-all duration-300" style={{transform: `scaleX(${(currentDomain + 1) / domains.length})`}}></div>
+            <div className="bg-white h-0.5 w-full origin-left transition-all duration-300" style={{ transform: `scaleX(${(currentDomain + 1) / domains.length})` }}></div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center flex-grow">
