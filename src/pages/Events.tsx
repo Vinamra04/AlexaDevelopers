@@ -1,54 +1,109 @@
-import React from 'react';
-import { Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import 'tailwindcss/tailwind.css';
 
-const events = [
+// Dummy data for upcoming events
+const upcomingEvents = [
   {
-    title: 'Alexa Skill Development Workshop',
-    date: '2023-05-15',
-    time: '14:00 - 17:00',
-    location: 'Tech Hub, SRM University',
-    description: 'Learn how to create your first Alexa Skill in this hands-on workshop.',
+    id: 1,
+    title: "AI Workshop",
+    date: "2023-08-15",
+    time: "14:00",
+    location: "Virtual",
+    description: "Learn about the latest AI technologies and their applications.",
+    image: "/images/AIWorkshop.jpg"
   },
   {
-    title: 'AI in Voice Technology Seminar',
-    date: '2023-06-02',
-    time: '10:00 - 12:00',
-    location: 'Main Auditorium, SRM University',
-    description: 'Explore the latest advancements in AI and their applications in voice technology.',
+    id: 2,
+    title: "Hackathon 2023",
+    date: "2023-09-01",
+    time: "09:00",
+    location: "SRM Campus",
+    description: "48-hour coding challenge to solve real-world problems.",
+    image: "/images/Hackathon.png"
   },
   {
-    title: 'Voice-First Hackathon',
-    date: '2023-07-10',
-    time: '09:00 - 18:00',
-    location: 'Innovation Center, SRM University',
-    description: 'A full-day hackathon to build innovative voice-based solutions using Alexa.',
+    id: 3,
+    title: "Tech Talk: Blockchain",
+    date: "2023-09-15",
+    time: "16:00",
+    location: "Virtual",
+    description: "Explore the potential of blockchain technology in various industries.",
+    image: "/images/TedTalk.jpg"
+  }
+];
+
+// Dummy data for past events
+const pastEvents = [
+  {
+    id: 4,
+    title: "Web Development Bootcamp",
+    date: "2023-05-20",
+    location: "SRM Campus",
+    description: "Intensive 3-day bootcamp on modern web development technologies.",
+    image: "/images/Bootcamp.jpg"
   },
+  {
+    id: 5,
+    title: "IoT Seminar",
+    date: "2023-04-10",
+    location: "Virtual",
+    description: "Exploring the Internet of Things and its impact on our daily lives.",
+    image: "/images/Seminar.jpg"
+  },
+  {
+    id: 6,
+    title: "Coding Competition",
+    date: "2023-03-05",
+    location: "SRM Campus",
+    description: "Annual coding competition to test your programming skills.",
+    image: "/images/CodingComp.png"
+  }
 ];
 
 const Events = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const renderEvent = (event: any, isUpcoming: boolean) => (
+    <div key={event.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+      <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
+      <div className="p-4">
+        <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
+        <p className="text-gray-600 mb-2">
+          {isUpcoming ? `${event.date} at ${event.time}` : event.date}
+        </p>
+        <p className="text-gray-600 mb-2">{event.location}</p>
+        <p className="text-gray-700">{event.description}</p>
+        {isUpcoming && (
+          <button className="mt-4 bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition duration-300">
+            Register
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="bg-background py-16">
+    <div className={`bg-background py-16 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-12 text-primary">Upcoming Events</h1>
-        <div className="space-y-8">
-          {events.map((event, index) => (
-            <div key={index} className="bg-light rounded-lg shadow-md p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold text-primary">{event.title}</h2>
-                <div className="flex items-center text-accent">
-                  <Calendar className="mr-2" />
-                  <span>{event.date}</span>
-                </div>
-              </div>
-              <p className="text-secondary mb-2">{event.time}</p>
-              <p className="text-secondary mb-4">{event.location}</p>
-              <p className="text-secondary">{event.description}</p>
-              <button className="mt-4 btn-secondary">
-                Register
-              </button>
-            </div>
-          ))}
-        </div>
+        <h1 className="text-4xl font-bold text-center mb-12">Events</h1>
+
+        <section id="upcoming" className="mb-16">
+          <h2 className="text-3xl font-semibold mb-8">Upcoming Events</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {upcomingEvents.map(event => renderEvent(event, true))}
+          </div>
+        </section>
+
+        <section id="past">
+          <h2 className="text-3xl font-semibold mb-8">Our Events</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {pastEvents.map(event => renderEvent(event, false))}
+          </div>
+        </section>
       </div>
     </div>
   );

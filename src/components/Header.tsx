@@ -1,7 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/header.css';
+import useScrollToSection from '../hooks/useScrollToSection';
 
 const Header = () => {
+  const scrollToSection = useScrollToSection();
+
+  const navItems = [
+    {
+      name: 'Home',
+      path: '/',
+      subItems: [
+        { name: 'About Us', path: '/#about' },
+        { name: 'Contact', path: '/#contact' },
+      ],
+    },
+    {
+      name: 'Our Team',
+      path: '/team',
+      subItems: [
+        { name: 'The Core', path: '/team#core' },
+        { name: 'The Heads', path: '/team#heads' },
+        { name: 'The Leads', path: '/team#leads' },
+        { name: 'The Executives', path: '/team#executives' },
+      ],
+    },
+    {
+      name: 'Events',
+      path: '/events',
+      subItems: [
+        { name: 'Upcoming Events', path: '/events#upcoming' },
+        { name: 'Past Events', path: '/events#past' },
+      ],
+    },
+  ];
+
   return (
     <header className="bg-primary text-background">
       <div className="container mx-auto px-4 py-6 flex justify-between items-center">
@@ -11,9 +44,30 @@ const Header = () => {
         </Link>
         <nav>
           <ul className="flex space-x-6">
-            <li><Link to="/" className="hover:text-light">Home</Link></li>
-            <li><Link to="/team" className="hover:text-light">Our Team</Link></li>
-            <li><Link to="/events" className="hover:text-light">Events</Link></li>
+            {navItems.map((item) => (
+              <li key={item.name} className="dropdown">
+                <Link to={item.path} className="nav-link dropbtn">
+                  {item.name}
+                </Link>
+                {item.subItems && (
+                  <div className="dropdown-content">
+                    {item.subItems.map((subItem) => (
+                      <a
+                        key={subItem.name}
+                        href={subItem.path}
+                        className="sub-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection(subItem.path);
+                        }}
+                      >
+                        {subItem.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

@@ -1,8 +1,17 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Cardo', 'serif']
+      },
+      letterSpacing: {
+        widest: '0.3em'
+      },
       colors: {
         primary: '#22223b',
         secondary: '#4a4e69',
@@ -12,5 +21,10 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+    plugin(function({ addVariant }) {
+      addVariant('supports-sda', '@supports (timeline-scope: none)')
+    }),
+  ],
 };

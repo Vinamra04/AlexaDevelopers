@@ -1,3 +1,1 @@
-# AlexaDevelopersSRM
-
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/Vinamra04/AlexaDevelopersSRM)
+This repository contains the source code for the Alexa Developers SRM website.

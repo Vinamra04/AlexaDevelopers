@@ -5,25 +5,36 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Events from './pages/Events';
-import ApplyNow from './components/ApplyNow';
+import Apply from './pages/Apply';
 import ApplyDomains from './pages/ApplyDomains';
+import DomainSelection from './pages/DomainSelection';
+import ApplyNow from './components/ApplyNow';
 
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/apply/domains" element={<ApplyDomains />} />
-          </Routes>
-        </main>
-        <Footer />
-        <ApplyNow />
-      </div>
+      <Routes>
+        <Route path="/domain-selection" element={<DomainSelection />} />
+        <Route
+          path="*"
+          element={
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/apply" element={<Apply />} />
+                  <Route path="/apply-domains" element={<ApplyDomains />} />
+                </Routes>
+              </main>
+              <Footer />
+              <ApplyNow />
+            </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

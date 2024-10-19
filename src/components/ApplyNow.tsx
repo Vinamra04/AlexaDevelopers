@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ApplyNow = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +7,12 @@ const ApplyNow = () => {
     name: '',
     email: '',
   });
-  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Don't show the Apply Now button on the DomainSelection page
+  if (location.pathname === '/domain-selection') {
+    return null;
+  }
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -19,7 +24,10 @@ const ApplyNow = () => {
 
   const handleNext = () => {
     if (formData.name && formData.email) {
-      navigate('/apply/domains', { state: formData });
+      setIsOpen(false); // Close the modal
+      // Open the domains page in a new tab
+      const domainsUrl = `/domain-selection?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+      window.open(domainsUrl, '_blank');
     } else {
       alert('Please fill in all fields');
     }
@@ -37,7 +45,7 @@ const ApplyNow = () => {
       {isOpen && (
         <div className="fixed inset-0 bg-primary bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-background rounded-lg p-8 max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4 text-primary">Apply to Join Alexa Developers SRM</h2>
+            <h2 className="text-2xl font-bold mb-4 text-primary">Want to be a part of Alexa Developers? Apply Now!</h2>
             <form>
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-secondary">Name</label>
